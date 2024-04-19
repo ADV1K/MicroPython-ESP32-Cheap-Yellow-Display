@@ -1,0 +1,3 @@
+WIFI_TIMEOUT = 20
+WIFI_SSID = 'Daredevil 2G'
+WIFI_PASSWORD = 'Ysr@1972'
