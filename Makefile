@@ -2,14 +2,13 @@
 
 dev:
 	@# Whenever a python file changes, upload the code and run the main.py
-	start=$(date +%s);
-	ls *.py | entr -scr "make run"
+	ls *.py | entr -scr "make sync && make run"
 
-run: sync
+run:
 	@# Run the main.py file on the microcontroller
 	ampy --port $(DEVICE) run main.py
 
-boot: sync
+boot:
 	@# Run the boot.py file on the microcontroller
 	ampy --port $(DEVICE) run boot.py
 
