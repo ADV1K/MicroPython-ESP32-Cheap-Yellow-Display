@@ -1,32 +1,29 @@
+
 dev:
-	@# Whenever the code changes, run main.py
+	@# Whenever the code changes, run it on the device
 	ls src/* | entr -scr "make run"
 
 run:
-	@# Run the main.py file on the microcontroller
-	mpr run src/main.py
+	@# Run the app.py file on the device
+	@echo "Running app.py on the device..."
+	@mpremote mount src + exec "import app"
 
-boot:
-	@# Run the boot.py file on the microcontroller
-	mpr run src/boot.py
+upload:
+	@# Deploy the code to the device and do a hard reset
+	@echo "cd src"
+	@cd src; mpremote cp -r . : + reset
+	@echo "Running main.py on the device..."
 
-sync:
-	@# Upload all the python files to the device
-	@for file in src/*; do \
-		echo "Uploading $$file..."; \
-		mpr put $$file /; \
-	done
-
-shell:
-	# screen $(DEVICE) 115200
-	# minicom -D $(DEVICE) -b 115200
-	# picocom -b 115200 $(DEVICE) 
-	mpr repl
+repl:
+	@# screen $(DEVICE) 115200
+	@# minicom -D $(DEVICE) -b 115200
+	@# picocom -b 115200 $(DEVICE) 
+	mpremote mount src repl --inject-code "import app\n"
 
 flash:
 	@echo "Flashing firmware..."
-	esptool.py --port $(DEVICE) erase_flash 
-	esptool.py --port $(DEVICE) --chip esp32 write_flash -z 0x1000 $(FIRMWARE)
+	esptool.py --port $(DEVICE) --baud 600000 erase_flash 
+	esptool.py --port $(DEVICE) --baud 600000 --chip esp32 write_flash -z 0x1000 $(FIRMWARE)
 
 
 .PHONY: flash shell ls sync boot run

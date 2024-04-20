@@ -1,3 +1,4 @@
+# pyright: reportMissingImports=false
 import machine
 import random
 import time
@@ -27,6 +28,21 @@ def reset():
         light.value(OFF)
 
 
+def blink(color, count=3):
+    "Blink led to indicate a state change, like connecting to wifi"
+    led = {
+        "red": red,
+        "green": green,
+        "blue": blue,
+    }[color]
+
+    for _ in range(count):
+        led.value(ON)
+        time.sleep(0.3)
+        led.value(OFF)
+        time.sleep(0.3)
+
+
 def sequence():
     "Go through the pattern one by one"
     while True:
@@ -46,5 +62,4 @@ def random_sequence():
 
 
 reset()
-random_sequence()
 
