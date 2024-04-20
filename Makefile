@@ -1,10 +1,8 @@
-
 dev:
 	@# Whenever the code changes, run it on the device
 	ls src/* | entr -scr "make run"
 
 run:
-	@# Run the app.py file on the device
 	@echo "Running app.py on the device..."
 	@mpremote mount src + exec "import app"
 
@@ -14,11 +12,15 @@ upload:
 	@cd src; mpremote cp -r . : + reset
 	@echo "Running main.py on the device..."
 
-repl:
+shell:
 	@# screen $(DEVICE) 115200
 	@# minicom -D $(DEVICE) -b 115200
 	@# picocom -b 115200 $(DEVICE) 
-	mpremote mount src repl --inject-code "import app\n"
+	mpremote mount src repl --inject-code "from app import *\n"
+
+mount-sdcard:
+	@echo "Mounting the SD card on the device..."
+	mpremote exec "import os, machine; os.mount(machine.SDCard(), '/sd')"
 
 flash:
 	@echo "Flashing firmware..."

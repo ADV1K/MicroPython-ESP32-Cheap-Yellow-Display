@@ -45,10 +45,12 @@ def sync_time_with_sntp():
 
 
 def main():
-    if connect_wifi():
-        led.blink("green")
-    else:
-        led.blink("red")
+    led.blink("blue", count=1)  # Blink Blue LED to indicate that the device is booting up
+
+    # if connect_wifi():
+    #     led.blink("green")
+    # else:
+    #     led.blink("red")
 
 
 main()

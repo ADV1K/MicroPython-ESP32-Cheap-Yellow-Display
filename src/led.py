@@ -28,7 +28,7 @@ def reset():
         light.value(OFF)
 
 
-def blink(color, count=3):
+def blink(color, count=3, delay=0.1):
     "Blink led to indicate a state change, like connecting to wifi"
     led = {
         "red": red,
@@ -38,9 +38,9 @@ def blink(color, count=3):
 
     for _ in range(count):
         led.value(ON)
-        time.sleep(0.3)
+        time.sleep(delay)
         led.value(OFF)
-        time.sleep(0.3)
+        time.sleep(delay)
 
 
 def sequence():

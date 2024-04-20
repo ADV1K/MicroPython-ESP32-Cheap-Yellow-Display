@@ -1,2 +1,2 @@
 import led
-led.blink("red")
+led.blink("blue")
