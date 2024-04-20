@@ -1,28 +1,27 @@
-# pip install adafruit-ampy
-
 dev:
-	@# Whenever a python file changes, upload the code and run the main.py
-	ls *.py | entr -scr "make sync && make run"
+	@# Whenever the code changes, run main.py
+	ls src/* | entr -scr "make run"
 
 run:
 	@# Run the main.py file on the microcontroller
-	ampy --port $(DEVICE) run main.py
+	mpr run src/main.py
 
 boot:
 	@# Run the boot.py file on the microcontroller
-	ampy --port $(DEVICE) run boot.py
+	mpr run src/boot.py
 
 sync:
 	@# Upload all the python files to the device
-	@for file in *.py; do \
+	@for file in src/*; do \
 		echo "Uploading $$file..."; \
-		ampy --port $(DEVICE) put $$file; \
+		mpr put $$file /; \
 	done
 
 shell:
 	# screen $(DEVICE) 115200
 	# minicom -D $(DEVICE) -b 115200
-	picocom -b 115200 $(DEVICE) 
+	# picocom -b 115200 $(DEVICE) 
+	mpr repl
 
 flash:
 	@echo "Flashing firmware..."

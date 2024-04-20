@@ -46,5 +46,5 @@ def random_sequence():
 
 
 reset()
-# random_sequence()
+random_sequence()
 

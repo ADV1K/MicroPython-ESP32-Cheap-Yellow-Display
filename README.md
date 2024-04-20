@@ -6,28 +6,32 @@ My experiments with MicroPython on the [ESP32 Cheap Yellow Display](https://gith
 1. Download the latest firmware from the [MicroPython ESP32 download page](https://micropython.org/download/ESP32_GENERIC/) or use the one provided in the repo.
 2. Figure out the device path of the ESP32. For example, it could be `/dev/ttyUSB0` on Linux, or `COM4` on Windows, and `/dev/cu.usbserial-XXXX` on macOS.
 
+```bash
+pip install mpr  # pipx install mpr
+mpr list
+```
+
 ## Flashing MicroPython
 After connecting the device using a USB cable, run the following command to flash MicroPython. Replace `FIRMWARE` with the path to the firmware file and `DEVICE` with the device path.
 Hold the `BOOT` button on the ESP32 after pasting the command to enter flashing mode.
 
 ```bash
-export FIRMWARE=./ESP32_GENERIC-20240222-v1.22.2.bin
-export DEVICE=/dev/ttyUSB0
+export FIRMWARE=firmware/ESP32_GENERIC-20240222-v1.22.2.bin
+export DEVICE=/dev/cu.usbserial-110
 make flash
 ```
 
 ## Connecting to REPL
-After flashing the firmware, you can connect to the MicroPython REPL using picocom. PuTTY on windows _migth_ work as well.
+After flashing the firmware, you can connect to the MicroPython REPL using `mpr`. On Windows, PuTTY should work as well.
 
 ```bash
-make shell
+mpr repl
 ```
 
 ## Running the Code
-You can upload code to the ESP32 using the `ampy` tool (`pip install adafruit-ampy`).
+You can run the code on the ESP32 using `mpr`
 
 ```bash
-make sync
 make run
 ```
 
